@@ -91,18 +91,24 @@ public class Order implements Serializable {
 	public Set<OrderItem> getItems() {
 		return items;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
+	
 	public Payment getPayment() {
 		return payment;
 	}
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+	
+	public Double getTotal() {
+		return items.stream()
+				.map(p -> p.getSubTotal())
+				.reduce(0.0, (x,p) -> x + p);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 	@Override
